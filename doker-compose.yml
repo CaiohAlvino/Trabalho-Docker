@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  # PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pokemon_app
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - pokemon-network
+    depends_on:
+      - db
+
+  # Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: pokemon_webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - pokemon-network
+    depends_on:
+      - app
+
+  # MySQL Service
+  db:
+    image: mysql:5.7
+    container_name: pokemon_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: pokemon_db
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_PASSWORD: db_password
+      MYSQL_USER: db_user
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - pokemon-network
+
+# Docker Networks
+networks:
+  pokemon-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  db_data:
+    driver: local
