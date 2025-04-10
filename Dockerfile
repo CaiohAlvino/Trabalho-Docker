@@ -22,3 +22,9 @@ COPY ./src /var/www/html
 
 # Ajustar permissões
 RUN chown -R www-data:www-data /var/www/html
+
+# Modificar o arquivo de configuração do PHP-FPM para usar a porta 9001
+RUN sed -i 's/listen = 9000/listen = 9001/g' /usr/local/etc/php-fpm.d/www.conf
+
+# Expor a nova porta
+EXPOSE 9001
