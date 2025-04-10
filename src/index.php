@@ -28,6 +28,7 @@
         .pokemon-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
         }
 
         .pokemon-card img {
@@ -70,7 +71,7 @@
         </div>
 
         <div class="row mb-4">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
                         Criar Novo Time
@@ -96,23 +97,22 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <!-- Card para times salvos -->
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bg-success text-white">
                         Times Salvos
                     </div>
                     <div class="card-body">
                         <div id="savedTeams">
-                            <!-- Os times salvos serão carregados com AJAX -->
-                            <div class="text-center">
-                                <button id="loadTeams" class="btn btn-pokemon">Carregar Times</button>
-                            </div>
+                            <!-- Os times salvos serão carregados automaticamente -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Card para a lista de Pokémon -->
         <div class="row mb-3">
             <div class="col-12">
                 <div class="card">
@@ -139,11 +139,12 @@
         </div>
     </div>
 
+    <!-- Scripts JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Carregar lista de Pokémon
+            // Carregar a lista de Pokémon
             $.ajax({
                 url: 'api/listar_pokemons.php',
                 type: 'GET',
@@ -156,17 +157,17 @@
                 }
             });
 
+            // Carregar times salvos automaticamente
+            loadSavedTeams();
+
             // Buscar Pokémon
             $('#btnSearch').click(function() {
                 const searchTerm = $('#searchPokemon').val().toLowerCase();
-
                 $.ajax({
                     url: 'api/buscar_pokemon.php',
                     type: 'GET',
                     dataType: 'json',
-                    data: {
-                        q: searchTerm
-                    },
+                    data: { q: searchTerm },
                     success: function(data) {
                         loadPokemonList(data);
                     },
@@ -176,8 +177,8 @@
                 });
             });
 
-            // Carregar times salvos
-            $('#loadTeams').click(function() {
+            // Função para carregar times salvos
+            function loadSavedTeams() {
                 $.ajax({
                     url: 'api/listar_times.php',
                     type: 'GET',
@@ -196,19 +197,17 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">`;
-
                                 team.pokemons.forEach(pokemon => {
                                     html += `
                                         <div class="col-2">
                                             <div class="pokemon-card text-center">
-                                                
+                                                <img src="../assets/images/${pokemon.imagem}.png" alt="${pokemon.nome}" style="max-height: 100px;">
                                                 <p class="mt-2 mb-0">${pokemon.nome}</p>
                                                 <small class="text-muted">${pokemon.tipo}</small>
                                             </div>
                                         </div>
                                     `;
                                 });
-
                                 html += `
                                             </div>
                                         </div>
@@ -222,41 +221,39 @@
                         $('#savedTeams').html('<p class="text-danger">Erro ao carregar times.</p>');
                     }
                 });
-            });
+            }
 
             // Função para carregar a lista de Pokémon
             function loadPokemonList(pokemons) {
                 let html = '';
-
                 pokemons.forEach(pokemon => {
                     html += `
                         <div class="col-md-2 col-sm-3 col-4 mb-3">
                             <div class="pokemon-card text-center" data-id="${pokemon.id}" data-name="${pokemon.nome}">
-                                
+                                <img src="../assets/images/${pokemon.imagem}.png" alt="${pokemon.nome}" style="max-height: 100px;">
                                 <p class="mt-2 mb-0">${pokemon.nome}</p>
                                 <small class="text-muted">${pokemon.tipo}</small>
                             </div>
                         </div>
                     `;
                 });
-
                 $('#pokemonList').html(html);
 
                 // Evento para selecionar/deselecionar Pokémon
                 $('.pokemon-card').click(function() {
                     const id = $(this).data('id');
                     const name = $(this).data('name');
+                    const imgSrc = $(this).find('img').attr('src');
                     const isSelected = $(this).hasClass('selected');
                     const selectedCount = $('.pokemon-card.selected').length;
 
                     if (!isSelected && selectedCount < 6) {
                         $(this).addClass('selected');
-                        addToSelectedList(id, name, $(this).find('img').attr('src'));
+                        addToSelectedList(id, name, imgSrc);
                     } else if (isSelected) {
                         $(this).removeClass('selected');
                         removeFromSelectedList(id);
                     }
-
                     updateSelectedCount();
                 });
             }
@@ -272,12 +269,11 @@
                         </div>
                     </div>
                 `;
-
                 $('#selectedPokemon').append(html);
                 updatePokemonIds();
 
                 // Evento para remover Pokémon da seleção
-                $('.remove-pokemon').click(function() {
+                $('.remove-pokemon').off('click').on('click', function() {
                     const id = $(this).data('id');
                     removeFromSelectedList(id);
                     $(`.pokemon-card[data-id="${id}"]`).removeClass('selected');
@@ -293,12 +289,7 @@
             function updateSelectedCount() {
                 const count = $('#selectedPokemon > div').length;
                 $('#selectedCount').text(count);
-
-                if (count === 6) {
-                    $('#saveTeam').prop('disabled', false);
-                } else {
-                    $('#saveTeam').prop('disabled', true);
-                }
+                $('#saveTeam').prop('disabled', count !== 6);
             }
 
             function updatePokemonIds() {
@@ -312,7 +303,6 @@
             // Evento de envio do formulário
             $('#teamForm').submit(function(e) {
                 e.preventDefault();
-
                 const teamName = $('#teamName').val();
                 const pokemonIds = $('#pokemonIds').val();
 
@@ -341,7 +331,7 @@
                             $('#selectedPokemon').empty();
                             $('.pokemon-card').removeClass('selected');
                             updateSelectedCount();
-                            $('#loadTeams').click(); // Recarregar a lista de times
+                            loadSavedTeams(); // Atualiza os times salvos automaticamente
                         } else {
                             alert('Erro ao salvar time: ' + response.message);
                         }
