@@ -31,8 +31,8 @@ Este projeto configura um ambiente de desenvolvimento utilizando Docker para rod
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com/CaiohAlvino/Trabalho-Doker.git
-   cd seu-repositorio
+   git clone https://github.com/CaiohAlvino/Trabalho-Docker.git
+   cd Trabalho-Docker
    ```
 
 2. **Construir e iniciar os containers:**
