@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # PHP Service
   app:
@@ -28,7 +26,7 @@ services:
     container_name: pokemon_webserver
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8080:80" # Mapeando a porta 80 do contêiner para a porta 8080 do host
     volumes:
       - ./src:/var/www/html
       - ./nginx/conf.d:/etc/nginx/conf.d

@@ -18,20 +18,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
 # Definir diretório de trabalho
 WORKDIR /var/www/html
 
 # Copiar arquivos da aplicação
 COPY ./src /var/www/html
-
-# Instalar dependências do Composer
-RUN composer install --no-dev --no-scripts --no-autoloader
-
-# Gerar autoload do Composer
-RUN composer dump-autoload --no-dev --optimize
 
 # Ajustar permissões
 RUN chown -R www-data:www-data /var/www/html
