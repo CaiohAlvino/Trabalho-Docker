@@ -13,7 +13,7 @@
                     Criar Novo Time
                 </div>
                 <div class="card-body">
-                    <form id="teamForm" action="api/salvar_time.php" method="post">
+                    <form id="teamForm" action="executar/time/salvar_time.php" method="post">
                         <div class="mb-3">
                             <label for="teamName" class="form-label">Nome do Time</label>
                             <input type="text" class="form-control" id="teamName" name="teamName" required>

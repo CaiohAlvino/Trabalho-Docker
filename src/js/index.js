@@ -1,7 +1,7 @@
 $(document).ready(function() {
     // Carregar a lista de Pokémon
     $.ajax({
-        url: 'api/listar_pokemons.php',
+        url: 'executar/listar_pokemons.php',
         type: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -19,7 +19,7 @@ $(document).ready(function() {
     $('#btnSearch').click(function() {
         const searchTerm = $('#searchPokemon').val().toLowerCase();
         $.ajax({
-            url: 'api/buscar_pokemon.php',
+            url: 'executar/buscar_pokemon.php',
             type: 'GET',
             dataType: 'json',
             data: { q: searchTerm },
@@ -35,7 +35,7 @@ $(document).ready(function() {
     // Função para carregar times salvos
     function loadSavedTeams() {
         $.ajax({
-            url: 'api/listar_times.php',
+            url: 'executar/time/listar_times.php',
             type: 'GET',
             dataType: 'json',
             success: function(data) {
@@ -116,7 +116,7 @@ $(document).ready(function() {
     // Funções para gerenciar os Pokémon selecionados
     function addToSelectedList(id, name, imgSrc) {
         const html = `
-            <div class="col-4 mb-2" data-id="${id}">
+            <div class="col-2 mb-2" data-id="${id}">
                 <div class="pokemon-card text-center selected-pokemon">
                     <img src="${imgSrc}" alt="${name}" style="max-height: 50px;">
                     <p class="mt-1 mb-0 small">${name}</p>
