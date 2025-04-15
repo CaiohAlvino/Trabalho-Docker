@@ -1,9 +1,9 @@
 <?php
 // Configuração do banco de dados
-$host = 'db';
-$db_name = 'pokemon_db';
-$username = 'db_user';
-$password = 'db_password';
+$host = 'localhost';
+$db_name = 'db_pokemon';
+$username = 'root';
+$password = '';
 $charset = 'utf8mb4';
 
 try {
