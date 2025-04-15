@@ -27,7 +27,7 @@ try {
     }
 
     // Conectar ao banco de dados
-    $pdo = require_once '../config/database.php';
+    $pdo = require_once '../config/Database.php';
 
     // Iniciar transação
     $pdo->beginTransaction();

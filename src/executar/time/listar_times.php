@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 try {
     // Conectar ao banco de dados
-    $pdo = require_once '../../config/database.php';
+    $pdo = require_once '../../config/Database.php';
 
     // Consultar todos os times
     $stmt = $pdo->query('SELECT * FROM times ORDER BY data_criacao DESC');

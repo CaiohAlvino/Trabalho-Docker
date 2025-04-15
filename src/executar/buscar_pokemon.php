@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 try {
     // Conectar ao banco de dados
-    $pdo = require_once '../config/database.php';
+    $pdo = require_once '../config/Database.php';
 
     // Verificar se o termo de busca foi fornecido
     $searchTerm = isset($_GET['q']) ? $_GET['q'] : '';
