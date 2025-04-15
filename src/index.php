@@ -61,6 +61,7 @@
                 </div>
                 <div class="card-body">
                     <div id="pokemonList" class="row">
+                        <?php //foreach $registros : $registro ?>
                         <!-- A lista de Pokémon será carregada com AJAX -->
                         <div class="text-center mt-3">
                             <div class="spinner-border text-primary" role="status">
