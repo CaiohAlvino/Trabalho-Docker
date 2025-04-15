@@ -34,6 +34,7 @@ Este projeto configura um ambiente de desenvolvimento utilizando Docker para rod
    git clone https://github.com/CaiohAlvino/Trabalho-Docker.git
    cd Trabalho-Docker
    ```
+   Verificar se a branch "main" que foi clonada pois ela é a certa
 
 2. **Construir e iniciar os containers:**
 
