@@ -1,13 +1,13 @@
-# Projeto PHP com Docker e MySQL
+# PHP Project with Docker and MySQL
 
-Este projeto configura um ambiente de desenvolvimento utilizando Docker para rodar uma aplicação PHP com servidor Apache e um banco de dados MySQL. Além disso, inclui o PHPMyAdmin para facilitar a administração do banco de dados.
+This project sets up a development environment using Docker to run a PHP application with Apache server and a MySQL database. It also includes PHPMyAdmin to facilitate database management.
 
-## Pré-requisitos
+## Prerequisites
 
-- [Docker](https://www.docker.com/get-started) instalado na sua máquina.
-- [Docker Compose](https://docs.docker.com/compose/install/) para orquestrar os containers.
+- [Docker](https://www.docker.com/get-started) installed on your machine.
+- [Docker Compose](https://docs.docker.com/compose/install/) to orchestrate the containers.
 
-## Estrutura do Projeto
+## Project Structure
 
 ```bash
 .
@@ -21,40 +21,44 @@ Este projeto configura um ambiente de desenvolvimento utilizando Docker para rod
 └── README.md
 ```
 
-- `src/`: Contém o código-fonte da aplicação PHP.
-- `docker-compose.yml`: Define os serviços (PHP, Apache, MySQL e PHPMyAdmin).
-- `Dockerfile`: Especifica a imagem personalizada do PHP com Apache.
-- `init.sql`: Script SQL para inicializar o banco de dados.
+- `src/`: Contains the PHP application source code.
+- `docker-compose.yml`: Defines the services (PHP, Apache, MySQL, and PHPMyAdmin).
+- `Dockerfile`: Specifies the custom PHP with Apache image.
+- `init.sql`: SQL script to initialize the database.
 
-## Configuração
+## Setup
 
-1. **Clone o repositório:**
+1. **Clone the repository:**
 
    ```bash
    git clone https://github.com/CaiohAlvino/Trabalho-Docker.git
    cd Trabalho-Docker
    ```
-   Verificar se a branch "main" que foi clonada pois ela é a certa
+   Make sure you are on the "main" branch, as it is the correct one.
 
-2. **Construir e iniciar os containers:**
+2. **Build and start the containers:**
 
    ```bash
    docker-compose up -d --build
    ```
 
-3. **Acessar a aplicação:**
+3. **Access the application:**
 
-   Abra seu navegador e acesse `http://localhost:8080`. Você deverá ver a página inicial da sua aplicação PHP.
+   Open your browser and go to `http://localhost:8080`. You should see the home page of your PHP application.
 
-## Observações
+## Notes
 
-- **Inicialização do Banco de Dados:** O script `init.sql` será executado automaticamente na primeira vez que o container do MySQL for iniciado, criando o banco de dados e as tabelas definidas.
-- **Persistência de Dados:** Os dados do banco de dados são armazenados no volume `db_data`, garantindo que os dados sejam mantidos entre reinicializações dos containers.
+- **Database Initialization:** The `init.sql` script will be executed automatically the first time the MySQL container starts, creating the database and defined tables.
+- **Data Persistence:** Database data is stored in the `db_data` volume, ensuring data is kept between container restarts.
 
-## Contribuições
+## Contributions
 
-1. Faça um fork deste repositório.
-2. Crie uma branch para sua feature (`git checkout -b feature/nome-da-feature`).
-3. Realize as alterações desejadas e faça commit (`git commit -am 'Descrição das alterações'`).
-4. Envie para a branch principal (`git push origin feature/nome-da-feature`).
-5. Abra um Pull Request detalhando as alterações realizadas.
+1. Fork this repository.
+2. Create a branch for your feature (`git checkout -b feature/feature-name`).
+3. Make your changes and commit them (`git commit -am 'Description of changes'`).
+4. Push to your branch (`git push origin feature/feature-name`).
+5. Open a Pull Request detailing your changes.
+
+## Improvements & Author's Note
+
+This is my first project using Docker, and there is plenty of room for improvements. Future updates will include new features, optimizations, and best practices as I continue learning and evolving this project. Feedback and suggestions are welcome!
